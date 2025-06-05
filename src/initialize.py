@@ -1,4 +1,5 @@
 import pickle
+from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -22,12 +23,12 @@ def run():
 
     # loading cookies
     if config.cookies_file_path.exists():
+        print("loading authentication cookies from previous runs")
         cookies = pickle.load(open(config.cookies_file_path, "rb"))
         for cookie in cookies:
             driver.add_cookie(cookie)
 
         driver.refresh()
-    should_save_cookies = False
 
     # in case the doh1 cookie isn't working
     try:
@@ -47,13 +48,14 @@ def run():
         driver.switch_to.window(driver.window_handles[0])
 
         print("successfully handled microsoft authentication")
-        should_save_cookies = True
+        # HACK: wait for cookies to load before writing them to file
+        sleep(10)
+        pickle.dump(driver.get_cookies(), open(config.cookies_file_path, "wb"))
+        print("saving cookies to file")
 
     print("starting to set future reports")
     handle_set_future_reports(driver=driver)
     print("successfully set future reports")
-    if should_save_cookies:
-        pickle.dump(driver.get_cookies(), open(config.cookies_file_path, "wb"))
 
     driver.close()
     print("program ended")

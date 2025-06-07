@@ -57,11 +57,17 @@
           (thisProjectAsNixPkg.pname + "-env")
           workspace.deps.default; # Uses deps from pyproject.toml [project.dependencies]
 
+        # app dependencies packages
+        dep_packages = with pkgs; [
+          appPythonEnv # Runtime Python environment
+          uv
+          firefox
+        ];
       in
       {
         # Development Shell
         devShells.default = pkgs.mkShell {
-          packages = [ appPythonEnv pkgs.ruff pkgs.uv ];
+          packages = dep_packages;
           shellHook = '' /* Your custom shell hooks */ '';
         };
 
@@ -72,7 +78,7 @@
           src = ./.; # Source of your main script
 
           nativeBuildInputs = [ pkgs.makeWrapper ];
-          buildInputs = [ appPythonEnv ]; # Runtime Python environment
+          buildInputs = dep_packages;
 
           installPhase = ''
             # creating /bin dir inside the deriviation
@@ -82,7 +88,8 @@
             cp -r ${./src} $out/bin/src
             # creating wrapper executable for the entire project
             makeWrapper ${appPythonEnv}/bin/python $out/bin/${thisProjectAsNixPkg.pname} \
-              --add-flags $out/bin/main.py
+              --add-flags $out/bin/main.py \
+              --prefix PATH : "${pkgs.lib.makeBinPath [ pkgs.firefox ]}"
           '';
         };
         packages.${thisProjectAsNixPkg.pname} = self.packages.${system}.default;

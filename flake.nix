@@ -91,6 +91,9 @@
               --add-flags $out/bin/main.py \
               --prefix PATH : "${pkgs.lib.makeBinPath [ pkgs.firefox ]}"
           '';
+
+          # specify main program for using getExe
+          meta.mainProgram = thisProjectAsNixPkg.pname;
         };
         packages.${thisProjectAsNixPkg.pname} = self.packages.${system}.default;
 

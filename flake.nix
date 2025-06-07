@@ -3,7 +3,7 @@
   description = "doh1-autofill";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     flake-utils.url = "github:numtide/flake-utils";
 
     # Core pyproject-nix ecosystem tools

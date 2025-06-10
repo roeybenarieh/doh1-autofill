@@ -65,24 +65,22 @@ def handle_set_future_reports(driver: WebDriver):
             break
 
         # report the day
-        for day in none_reported_days_buttons:
-            day.click()
-            # Click basis image
-            WebDriverWait(driver, 50).until(
-                EC.element_to_be_clickable(BASISIMAGE)
-            ).click()
+        day = none_reported_days_buttons[0]
+        day.click()
+        # Click basis image
+        WebDriverWait(driver, 50).until(EC.element_to_be_clickable(BASISIMAGE)).click()
 
-            # Click 'present' button
-            WebDriverWait(driver, 50).until(
-                EC.element_to_be_clickable(PRESENTBUTTON)
-            ).click()
+        # Click 'present' button
+        WebDriverWait(driver, 50).until(
+            EC.element_to_be_clickable(PRESENTBUTTON)
+        ).click()
 
-            # Click 'send report'
-            WebDriverWait(driver, 50).until(
-                EC.element_to_be_clickable(GENERALNEXTBUTTON)
-            ).click()
+        # Click 'send report'
+        WebDriverWait(driver, 50).until(
+            EC.element_to_be_clickable(GENERALNEXTBUTTON)
+        ).click()
 
-            # Click 'ok and finish'
-            WebDriverWait(driver, 50).until(
-                EC.element_to_be_clickable(GENERALNEXTBUTTON)
-            ).click()
+        # Click 'ok and finish'
+        WebDriverWait(driver, 50).until(
+            EC.element_to_be_clickable(GENERALNEXTBUTTON)
+        ).click()

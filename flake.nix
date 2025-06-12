@@ -62,6 +62,7 @@
           appPythonEnv # Runtime Python environment
           uv
           firefox
+          geckodriver
         ];
       in
       {
@@ -89,7 +90,8 @@
             # creating wrapper executable for the entire project
             makeWrapper ${appPythonEnv}/bin/python $out/bin/${thisProjectAsNixPkg.pname} \
               --add-flags $out/bin/main.py \
-              --prefix PATH : "${pkgs.lib.makeBinPath [ pkgs.firefox ]}"
+              --prefix PATH : "${pkgs.lib.makeBinPath [ pkgs.firefox ]}" \
+              --set SE_GECKODRIVER "${pkgs.geckodriver}/bin/geckodriver" \
           '';
 
           # specify main program for using getExe

@@ -23,7 +23,7 @@ def run():
 
     # loading cookies
     if config.cookies_file_path.exists():
-        print("loading authentication cookies from previous runs")
+        print(f"loading authentication cookies from: {config.cookies_file_path}")
         cookies = pickle.load(open(config.cookies_file_path, "rb"))
         for cookie in cookies:
             driver.add_cookie(cookie)
@@ -51,7 +51,7 @@ def run():
         # HACK: wait for cookies to load before writing them to file
         sleep(10)
         pickle.dump(driver.get_cookies(), open(config.cookies_file_path, "wb"))
-        print("saving cookies to file")
+        print(f"saving cookies to file: {config.cookies_file_path}")
 
     print("starting to set future reports")
     handle_set_future_reports(driver=driver)

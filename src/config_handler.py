@@ -7,8 +7,6 @@ from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class UserConfiguration(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
     id_number: Annotated[str, Field(pattern=r"^\d{9}$")]
     microsoft_mail: EmailStr
     microsoft_password: str

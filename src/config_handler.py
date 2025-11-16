@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
 from platformdirs import PlatformDirs
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
@@ -12,6 +12,9 @@ class UserConfiguration(BaseModel):
     id_number: Annotated[str, Field(pattern=r"^\d{9}$")]
     microsoft_mail: EmailStr
     microsoft_password: str
+    browser_installed: Literal[
+        "chrome", "firefox"
+    ]  # pretty sure safari doesnt have --headless option(which I need)
 
 
 class Configuration(UserConfiguration):

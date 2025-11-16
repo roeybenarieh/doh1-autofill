@@ -19,6 +19,7 @@ Configuration template:
 {
   "id_number": "<your_id_number>",
   "microsoft_mail": "<your_id_number>@idf.il",
-  "microsoft_password": "<your_password>"
+  "microsoft_password": "<your_password>",
+  "browser_installed": "chrome/firefox/safari"
 }
 ```

@@ -2,7 +2,8 @@ import pickle
 from time import sleep
 
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 from src.config_handler import get_config
 from src.doh1_website_handler import (
@@ -16,9 +17,17 @@ def run():
     print("starting")
     config = get_config()
     # scraping init
-    options = Options()
-    options.add_argument("--headless")
-    driver = webdriver.Firefox(options=options)
+    if config.browser_installed == "firefox":
+        options = FirefoxOptions()
+        options.add_argument("--headless")
+        driver = webdriver.Firefox(options=options)
+    elif config.browser_installed == "firefox":
+        options = ChromeOptions()
+        options.add_argument("--headless")
+        driver = webdriver.Chrome(options=options)
+    else:
+        raise ValueError("unknown browser installed")
+
     driver.get("https://one.prat.idf.il/login")
 
     # loading cookies

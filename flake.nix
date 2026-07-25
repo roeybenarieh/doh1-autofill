@@ -69,7 +69,6 @@
         # Development Shell
         devShells.default = pkgs.mkShell {
           packages = dep_packages;
-          shellHook = '' /* Your custom shell hooks */ '';
         };
 
         # Nix Package for Your Application

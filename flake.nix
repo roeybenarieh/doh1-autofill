@@ -22,7 +22,7 @@
   outputs = { self, nixpkgs, flake-utils, uv2nix, pyproject-nix, pyproject-build-systems, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = nixpkgs.legacyPackages.${system};
         python = pkgs.python312; # desired Python version
 
         # 1. Load Project Workspace (parses pyproject.toml, uv.lock)
